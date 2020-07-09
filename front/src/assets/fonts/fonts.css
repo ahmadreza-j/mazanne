@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "IranSans";
+    src: url("./IRANSansWeb\(FaNum\).woff") format("woff"),
+      url("./IRANSansWeb\(FaNum\).ttf") format("truetype"),
+      url("./IRANSansWeb\(FaNum\).eot?#iefix")
+        format("embedded-opentype");
+  }
+  @font-face {
+    font-family: "IranSans-bold";
+    src: url("./IRANSansWeb\(FaNum\)_Black.woff") format("woff"),
+      url("./IRANSansWeb\(FaNum\)_Black.ttf") format("truetype"),
+      url("./IRANSansWeb\(FaNum\)_Black.eot?#iefix")
+        format("embedded-opentype");
+  }
+  
+  /* @font-face {
+    font-family: "IranSans";
+    src: url("./assets/fonts/IRANSansWeb\(FaNum\).woff") format("woff"),
+      url("./assets/fonts/IRANSansWeb\(FaNum\).ttf") format("truetype"),
+      url("./assets/fonts/IRANSansWeb\(FaNum\).eot?#iefix")
+        format("embedded-opentype");
+  }
+  @font-face {
+    font-family: "IranSans-bold";
+    src: url("./assets/fonts/IRANSansWeb\(FaNum\)_Black.woff") format("woff"),
+      url("./assets/fonts/IRANSansWeb\(FaNum\)_Black.ttf") format("truetype"),
+      url("./assets/fonts/IRANSansWeb\(FaNum\)_Black.eot?#iefix")
+        format("embedded-opentype");
+  } */
