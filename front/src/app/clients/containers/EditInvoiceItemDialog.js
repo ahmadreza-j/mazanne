@@ -4,19 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   editModalHandler,
   editInvoiceItem,
-} from "../../../redux/actions/clientsAction";
+} from "../../../store/actions/clientsAction";
 
 import Grid from "@material-ui/core/Grid";
 // import Paper from "@material-ui/core/Paper";
 
 // import { makeStyles } from "@material-ui/core/styles";
 
-import UInput from "./ui/UInput";
-import USelect2 from "./ui/USelect2";
-import ResponsiveModal from "./ui/ResponsiveModal";
+import UInput from "../components/ui/UInput";
+import USelect2 from "../components/ui/USelect2";
+import ResponsiveModal from "../components/ui/ResponsiveModal";
 
-import MoreInfoNewInvoice from "./MoreInfoNewInvoice";
-import EditInvoiceAction from "./EditInvoiceAction";
+import MoreInfoNewInvoice from "../components/MoreInfoNewInvoice";
+import EditInvoiceAction from "../components/EditInvoiceAction";
 import {  unitList } from "../../fakeData";
 
 // const useStyles = makeStyles((theme) => ({

@@ -116,18 +116,36 @@ export const zones = [
   { id: uuidv4(), value: 117, label: "تورو خدمات مسافرتی" },
 ];
 
-export const selectiveData = [
+export const mainZones = [
   {
-    value: 1,
-    label: "الکتریکی",
+    id: uuidv4(),
+    value: 11,
+    label: "صنعت",
+    data: [
+      { id: uuidv4(), value: 101, label: "برق و الکترونیک", data: z101 },
+      { id: uuidv4(), value: 102, label: "همه چی در مورد فلزات", data: z102 },
+      { id: uuidv4(), value: 103, label: "لوله و اتصالات ", data: z103 },
+    ],
   },
   {
-    value: 2,
-    label: "هیدرولیکی",
+    id: uuidv4(),
+    value: 12,
+    label: "خودرو",
+    data: [
+      { id: uuidv4(), value: 104, label: "صنایع شیمیایی", data: z101 },
+      { id: uuidv4(), value: 105, label: "بسته بندی", data: z102 },
+      { id: uuidv4(), value: 106, label: "صنایع غذایی", data: z103 },
+    ],
   },
   {
-    value: 3,
-    label: "مکانیکی",
+    id: uuidv4(),
+    value: 13,
+    label: "عمومی",
+    data: [
+      { id: uuidv4(), value: 107, label: "چوب و کاغذ", data: z101 },
+      { id: uuidv4(), value: 108, label: "نساجی و چرم", data: z102 },
+      { id: uuidv4(), value: 109, label: "معدن و مواد معدنی", data: z103 },
+    ],
   },
 ];
 
@@ -147,5 +165,28 @@ export const unitList = [
   {
     value: 4,
     label: "سایر",
+  },
+];
+
+export const provinces = [
+  {
+    id: uuidv4(),
+    code: 10001,
+    label: "تهران",
+    cities: [
+      { id: uuidv4(), code: 10001001, label: "تهران" },
+      { id: uuidv4(), code: 10001002, label: "ری" },
+      { id: uuidv4(), code: 10001003, label: "پردیس" },
+    ],
+  },
+  {
+    id: uuidv4(),
+    code: 10002,
+    label: "مرکزی",
+    cities: [
+      { id: uuidv4(), code: 10002001, label: "اراک" },
+      { id: uuidv4(), code: 10002002, label: "آشتیان" },
+      { id: uuidv4(), code: 10002003, label: "تفرش" },
+    ],
   },
 ];

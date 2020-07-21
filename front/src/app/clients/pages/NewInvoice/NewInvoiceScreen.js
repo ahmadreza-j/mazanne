@@ -1,24 +1,24 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import ScreenContainer from "../../../shared/ScreenContainer";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 import Fade from "@material-ui/core/Fade";
 
-import SelectZoneDialog from "../../components/SelectZoneDialog";
-import NewInvoiceTable from "../../components/NewInvoiceTable";
-import NewInvoiceComp from "../../components/NewInvoiceComp";
-import EditInvoiceItemDialog from "../../components/EditInvoiceItemDialog";
+import SelectZoneDialog from "../../containers/SelectZoneDialog";
+import NewInvoiceTable from "../../containers/NewInvoiceTable";
+import NewInvoiceComp from "../../containers/NewInvoiceComp";
+import EditInvoiceItemDialog from "../../containers/EditInvoiceItemDialog";
 
 import {
   showSelectZoneHandler,
   httpGetZonesInfo,
   httpGetUnits,
-} from "../../../../redux/actions/clientsAction";
+} from "../../../../store/actions/clientsAction";
 
-import "../../components/style/newInvoiceScreen.css";
+// import "../../components/style/newInvoiceScreen.css";
 
 const useStyles = makeStyles((theme) => ({
   sticky: {
@@ -31,10 +31,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   titleContainer: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
   },
   contentContainer: {
+    flex: 1,
+    flexGrow: 1,
+    overflow: "auto",
     paddingTop: theme.spacing(1),
     paddingRight: "1px",
     paddingLeft: "1px",
@@ -42,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+  },
+  wrapper: {
+    // height: "100%",
+    // display: "flex",
+    // flexDirection: "column",
+    // flexWrap: "nowrap",
   },
 }));
 
@@ -68,7 +76,7 @@ const NewInvoiceScreen = () => {
   return (
     <>
       {isShowSelectZone && <SelectZoneDialog />}
-      <Container maxWidth="lg" className="wrapper">
+      <ScreenContainer className={classes.wrapper}>
         <div className={classes.titleContainer}>
           <Typography variant="h5">استعلام قیمت</Typography>
         </div>
@@ -76,7 +84,7 @@ const NewInvoiceScreen = () => {
           {/* <div className={classes.sticky} ref={NewInvoiceCompSection}> */}
           <NewInvoiceComp />
         </div>
-        <div className={("content", classes.contentContainer)}>
+        <div className={classes.contentContainer}>
           {newInvoiceItems.length > 0 && (
             <Fade in={newInvoiceItems.length > 0}>
               <>
@@ -90,7 +98,7 @@ const NewInvoiceScreen = () => {
             </Fade>
           )}
         </div>
-      </Container>
+      </ScreenContainer>
 
       {isModalOpen && <EditInvoiceItemDialog />}
     </>

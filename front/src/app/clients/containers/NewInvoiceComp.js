@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   NewInvoiceCompItem,
   scrollToBot,
-} from "../../../redux/actions/clientsAction";
+} from "../../../store/actions/clientsAction";
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -12,11 +12,11 @@ import Collapse from "@material-ui/core/Collapse";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import UInput from "./ui/UInput";
-import USelect2 from "./ui/USelect2";
+import UInput from "../components/ui/UInput";
+import USelect2 from "../components/ui/USelect2";
 
-import NewInvoiceAction from "./NewInvoiceAction";
-import MoreInfoNewInvoice from "./MoreInfoNewInvoice";
+import NewInvoiceAction from "../components/NewInvoiceAction";
+import MoreInfoNewInvoice from "../components/MoreInfoNewInvoice";
 import { invoiceItem, invoiceInitialValue } from "../Model/clientsModel";
 
 const useStyles = makeStyles((theme) => ({

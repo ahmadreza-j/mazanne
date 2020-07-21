@@ -10,14 +10,14 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Slide from "@material-ui/core/Slide";
 
-import ConfirmDialog from "./ui/ConfirmDialog";
-import InvoiceItemAction from "./InvoiceItemAction";
+import ConfirmDialog from "../components/ui/ConfirmDialog";
+import InvoiceItemAction from "../components/InvoiceItemAction";
 
 import {
   selectForEdit,
   deleteInvoiceItem,
   editModalHandler,
-} from "../../../redux/actions/clientsAction";
+} from "../../../store/actions/clientsAction";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {

@@ -5,12 +5,12 @@ import Paper from "@material-ui/core/Paper";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 
-import ResponsiveModal from "./ui/ResponsiveModal";
+import ResponsiveModal from "../components/ui/ResponsiveModal";
 
 import {
   showSelectZoneHandler,
   selectZone,
-} from "../../../redux/actions/clientsAction";
+} from "../../../store/actions/clientsAction";
 
 import { zones } from "../../fakeData";
 

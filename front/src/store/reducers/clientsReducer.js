@@ -1,6 +1,9 @@
 import * as acType from "../actions/clientsAction";
 
 const initialState = {
+  provinces: [],
+  selectedProvinces: [],
+  selectedCities: [],
   zones: [],
   isShowSelectZone: true,
   selectedZone: {},
@@ -18,6 +21,27 @@ const initialState = {
 
 const clientsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case acType.HTTP_GET_PROVINCES: {
+      return {
+        ...state,
+        provinces: action.payload,
+      };
+    }
+
+    case acType.SELECT_PROVINCES: {
+      return {
+        ...state,
+        selectedProvinces: action.payload,
+      };
+    }
+
+    case acType.SELECT_CITIES: {
+      return {
+        ...state,
+        selectedCities: action.payload,
+      };
+    }
+
     case acType.HTTP_GET_ZONES_INFO: {
       return {
         ...state,

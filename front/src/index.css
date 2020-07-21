@@ -3,3 +3,13 @@
 * {
   font-family: IranSans;
 } 
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
