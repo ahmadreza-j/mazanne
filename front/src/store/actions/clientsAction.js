@@ -1,16 +1,19 @@
-import { zones, unitList, provinces } from "../../app/fakeData";
+import { mainZones, unitList, provinces } from "../../app/fakeData";
+import { GET, POST } from "../../util/httpAxios";
 
 export const HTTP_GET_PROVINCES = "HTTP_GET_PROVINCES";
 export const SELECT_PROVINCES = "SELECT_PROVINCES";
 export const SELECT_CITIES = "SELECT_CITIES";
 export const HTTP_GET_ZONES_INFO = "HTTP_GET_ZONES_INFO";
-export const SHOW_SELECT_ZONE_HANDLER = "SHOW_SELECT_ZONE_HANDLER";
-export const SELECT_ZONE = "SELECT_ZONE";
+// export const SHOW_SELECT_ZONE_HANDLER = "SHOW_SELECT_ZONE_HANDLER";
+export const SELECT_MAIN_ZONE = "SELECT_MAIN_ZONE";
+export const SELECT_SUB_ZONE = "SELECT_SUB_ZONE";
 export const HTTP_GET_UNITS = "HTTP_GET_UNITS";
 export const ADD_NEW_INVOICE_ITEM = "ADD_NEW_INVOICE_ITEM";
 export const SELECT_ITEM_FOR_EDIT = "SELECT_ITEM_FOR_EDIT";
 export const EDIT_INVOICE_ITEM = "EDIT_INVOICE_ITEM";
 export const DELETE_INVOICE_ITEM = "DELETE_INVOICE_ITEM";
+export const HTTP_CREATE_NEW_INVOICE = "HTTP_CREATE_NEW_INVOICE";
 export const EDIT_MODAL_HANDLER = "EDIT_MODAL_HANDLER";
 
 export const httpGetProvinces = () => {
@@ -33,19 +36,25 @@ export const selectCities = (cities) => {
 
 export const httpGetZonesInfo = () => {
   return (dispatch) => {
-    dispatch({ type: HTTP_GET_ZONES_INFO, payload: zones });
+    dispatch({ type: HTTP_GET_ZONES_INFO, payload: mainZones });
   };
 };
 
-export const showSelectZoneHandler = (boolean) => {
+// export const showSelectZoneHandler = (boolean) => {
+//   return (dispatch) => {
+//     dispatch({ type: SHOW_SELECT_ZONE_HANDLER, payload: boolean });
+//   };
+// };
+
+export const selectMainZone = (mainZone) => {
   return (dispatch) => {
-    dispatch({ type: SHOW_SELECT_ZONE_HANDLER, payload: boolean });
+    dispatch({ type: SELECT_MAIN_ZONE, payload: mainZone });
   };
 };
 
-export const selectZone = (zone) => {
+export const selectSubZone = (subZone) => {
   return (dispatch) => {
-    dispatch({ type: SELECT_ZONE, payload: zone });
+    dispatch({ type: SELECT_SUB_ZONE, payload: subZone });
   };
 };
 
@@ -55,7 +64,7 @@ export const httpGetUnits = () => {
   };
 };
 
-export const NewInvoiceCompItem = (item) => {
+export const addNewInvoiceItem = (item) => {
   return (dispatch) => {
     dispatch({ type: ADD_NEW_INVOICE_ITEM, payload: item });
   };
@@ -73,9 +82,17 @@ export const editInvoiceItem = (item) => {
   };
 };
 
-export const deleteInvoiceItem = (itemId) => {
+export const deleteInvoiceItem = (productId) => {
   return (dispatch) => {
-    dispatch({ type: DELETE_INVOICE_ITEM, payload: itemId });
+    dispatch({ type: DELETE_INVOICE_ITEM, payload: productId });
+  };
+};
+
+export const httpCreateNewInvoice = (invoice) => {
+  return async (dispatch) => {
+    const response = await POST("/client/create-new-invoice", invoice);
+    console.log(response);
+    // dispatch({ type: HTTP_CREATE_NEW_INVOICE, payload: response });
   };
 };
 

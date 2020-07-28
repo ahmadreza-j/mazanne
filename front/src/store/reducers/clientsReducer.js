@@ -4,15 +4,10 @@ const initialState = {
   provinces: [],
   selectedProvinces: [],
   selectedCities: [],
+  // isShowSelectZone: true,
   zones: [],
-  isShowSelectZone: true,
-  selectedZone: {},
-  // selectedZone: {
-  //   id: "0",
-  //   value: 0,
-  //   label: "انتخاب نشده",
-  //   data: [{ id: "00", value: 0, label: "انتخاب دسته بندی" }],
-  // },
+  selectedMainZone: {},
+  selectedSubZone: {},
   units: [],
   newInvoiceItems: [],
   selectedItemForEdit: {},
@@ -49,17 +44,24 @@ const clientsReducer = (state = initialState, action) => {
       };
     }
 
-    case acType.SHOW_SELECT_ZONE_HANDLER: {
+    // case acType.SHOW_SELECT_ZONE_HANDLER: {
+    //   return {
+    //     ...state,
+    //     isShowSelectZone: action.payload,
+    //   };
+    // }
+
+    case acType.SELECT_MAIN_ZONE: {
       return {
         ...state,
-        isShowSelectZone: action.payload,
+        selectedMainZone: action.payload,
       };
     }
 
-    case acType.SELECT_ZONE: {
+    case acType.SELECT_SUB_ZONE: {
       return {
         ...state,
-        selectedZone: action.payload,
+        selectedSubZone: action.payload,
       };
     }
 
@@ -95,7 +97,7 @@ const clientsReducer = (state = initialState, action) => {
     case acType.EDIT_INVOICE_ITEM: {
       const tempNewInvoiceItems = [...state.newInvoiceItems];
       const selectedItemIndexForEdit = tempNewInvoiceItems.findIndex((item) => {
-        return item.itemId === action.payload.itemId;
+        return item.productId === action.payload.productId;
       });
       tempNewInvoiceItems[selectedItemIndexForEdit] = action.payload;
 
@@ -108,7 +110,7 @@ const clientsReducer = (state = initialState, action) => {
     case acType.DELETE_INVOICE_ITEM: {
       const tempNewInvoiceItems = [...state.newInvoiceItems];
       const selectedItemIndexForDelete = tempNewInvoiceItems.findIndex(
-        (item) => item.itemId === action.payload
+        (item) => item.productId === action.payload
       );
       tempNewInvoiceItems.splice(selectedItemIndexForDelete, 1);
 

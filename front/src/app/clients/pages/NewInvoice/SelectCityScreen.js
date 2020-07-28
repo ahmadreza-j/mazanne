@@ -15,6 +15,7 @@ import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 
 import {
   httpGetProvinces,
+  selectProvinces,
   selectCities,
 } from "../../../../store/actions/clientsAction";
 
@@ -84,6 +85,7 @@ const SelectCityScreen = () => {
   };
 
   const nextStep = async () => {
+    await dispatch(selectProvinces(selectedProvinces));
     await dispatch(selectCities(selectedCities));
     const path = "/select-zone";
     navigateHandler(path);

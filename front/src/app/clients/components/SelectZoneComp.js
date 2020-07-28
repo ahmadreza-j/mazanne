@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
+import ButtonBase from "@material-ui/core/ButtonBase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
   },
   gridList: {
-    width: 500,
-    height: 450,
+    width: "100%",
+    height: "100%",
   },
   item: {
     height: "100%",
@@ -35,9 +36,13 @@ export default function SelectZoneComp({ data, onSelectItem }) {
       <GridList cellHeight={100} className={classes.gridList} cols={3}>
         {data.map((item) => (
           <GridListTile key={item.id} cols={1}>
-            <Paper className={classes.item} onClick={() => onSelectItem(item)}>
-              <label>{item.label}</label>
-            </Paper>
+            <ButtonBase
+              component={Paper}
+              className={classes.item}
+              onClick={() => onSelectItem(item)}
+            >
+              {item.label}
+            </ButtonBase>
           </GridListTile>
         ))}
       </GridList>

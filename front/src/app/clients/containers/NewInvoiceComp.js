@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  NewInvoiceCompItem,
+  addNewInvoiceItem,
   scrollToBot,
 } from "../../../store/actions/clientsAction";
 
@@ -17,7 +17,10 @@ import USelect2 from "../components/ui/USelect2";
 
 import NewInvoiceAction from "../components/NewInvoiceAction";
 import MoreInfoNewInvoice from "../components/MoreInfoNewInvoice";
-import { invoiceItem, invoiceInitialValue } from "../Model/clientsModel";
+import {
+  createdInvoiceItem,
+  invoiceInitialValue,
+} from "../controllers/invoiceController";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,14 +36,14 @@ const NewInvoiceComp = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const selectedZone = useSelector((state) => state.clients.selectedZone);
+  const selectedSubZone = useSelector((state) => state.clients.selectedSubZone);
   const unitList = useSelector((state) => state.clients.units);
   const initialState = invoiceInitialValue();
 
   useEffect(() => {
-    setProductCategory(selectedZone.data ? selectedZone.data[0] : "");
+    setProductCategory(selectedSubZone.data ? selectedSubZone.data[0] : "");
     setProductUnit(unitList[0]);
-  }, [selectedZone, unitList]);
+  }, [selectedSubZone, unitList]);
 
   const [productCategory, setProductCategory] = useState("");
   const [productName, setProductName] = useState(initialState.productName);
@@ -75,8 +78,8 @@ const NewInvoiceComp = () => {
     // dispatch(scrollToBot());
   };
 
-  const NewInvoiceCompItemHandler = async () => {
-    const newItem = invoiceItem(
+  const addNewInvoiceItemHandler = async () => {
+    const newItem = createdInvoiceItem(
       productCategory,
       productName,
       productCount,
@@ -85,16 +88,17 @@ const NewInvoiceComp = () => {
       productImg
     );
 
-    await dispatch(NewInvoiceCompItem(newItem));
+    await dispatch(addNewInvoiceItem(newItem));
     dispatch(scrollToBot());
     resetForm();
+    newItem.log();
   };
 
   const resetForm = () => {
     setProductName(initialState.productName);
     setProductCount(initialState.productCount);
-    setProductCount(initialState.productCount);
     setProductUnit(unitList[0]);
+    setProductDesc(initialState.productDesc);
     setProductImg(initialState.productImg);
     setShowMore(initialState.showMore);
   };
@@ -113,7 +117,7 @@ const NewInvoiceComp = () => {
         <Grid item md={true} sm={6} xs={12}>
           <USelect2
             inputLabel="انتخاب دسته بندی"
-            selectiveData={selectedZone.data || []}
+            selectiveData={selectedSubZone.data || []}
             onSelect={onSelectCategory}
             selectedItem={productCategory}
           />
@@ -146,7 +150,7 @@ const NewInvoiceComp = () => {
           <NewInvoiceAction
             showMore={showMore}
             showMoreHandler={showMoreHandler}
-            NewInvoiceCompItemHandler={NewInvoiceCompItemHandler}
+            NewInvoiceCompItemHandler={addNewInvoiceItemHandler}
           />
         </Grid>
 

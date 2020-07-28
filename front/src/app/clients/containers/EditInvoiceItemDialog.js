@@ -7,9 +7,6 @@ import {
 } from "../../../store/actions/clientsAction";
 
 import Grid from "@material-ui/core/Grid";
-// import Paper from "@material-ui/core/Paper";
-
-// import { makeStyles } from "@material-ui/core/styles";
 
 import UInput from "../components/ui/UInput";
 import USelect2 from "../components/ui/USelect2";
@@ -17,24 +14,11 @@ import ResponsiveModal from "../components/ui/ResponsiveModal";
 
 import MoreInfoNewInvoice from "../components/MoreInfoNewInvoice";
 import EditInvoiceAction from "../components/EditInvoiceAction";
-import {  unitList } from "../../fakeData";
-
-// const useStyles = makeStyles((theme) => ({
-//   paper: {
-//     padding: theme.spacing(1),
-//   },
-//   imagePicker: {
-//     height: 50,
-//     width: 50,
-//   },
-// }));
+import { unitList } from "../../fakeData";
 
 const EditInvoiceItemDialog = () => {
-  // const classes = useStyles();
   const dispatch = useDispatch();
-  const selectedZone = useSelector(
-    (state) => state.clients.selectedZone
-  );
+  const selectedSubZone = useSelector((state) => state.clients.selectedSubZone);
   const selectedItem = useSelector(
     (state) => state.clients.selectedItemForEdit
   );
@@ -93,13 +77,13 @@ const EditInvoiceItemDialog = () => {
       closeHandler={() => dispatch(editModalHandler(false))}
       fullWidth
     >
-      {selectedItem.itemId && (
+      {selectedItem.productId && (
         // <Paper className={classes.paper}>
         <Grid container direction="row" alignItems="center" spacing={1}>
           <Grid item md={3} xs={12}>
             <USelect2
               inputLabel="انتخاب دسته بندی"
-              selectiveData={selectedZone.data}
+              selectiveData={selectedSubZone.data}
               onSelect={onSelectCategory}
               selectedItem={productCategory}
             />

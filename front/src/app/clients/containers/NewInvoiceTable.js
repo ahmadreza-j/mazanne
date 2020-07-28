@@ -75,7 +75,7 @@ export default function CustomizedTables({ tableData }) {
   };
 
   const deleteInvoiceItemHandler = () => {
-    dispatch(deleteInvoiceItem(selectedItem.itemId));
+    dispatch(deleteInvoiceItem(selectedItem.productId));
     setIsOpenHandler(false);
   };
 
@@ -115,7 +115,7 @@ export default function CustomizedTables({ tableData }) {
                 in={true}
                 mountOnEnter
                 unmountOnExit
-                key={item.itemId}
+                key={item.productId}
               >
                 <StyledTableRow>
                   <StyledTableCell align="center" component="th" scope="row">

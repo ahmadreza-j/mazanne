@@ -13,6 +13,7 @@ export default createMuiTheme({
       contrastText: `#ffd740`,
     },
     secondary: {
+      ultraLight:`#fff9e6`,
       light: `#ffff74`,
       main: `#ffd740`,
       dark: `#c8a600`,

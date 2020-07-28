@@ -5,10 +5,10 @@ import ButtonBase from "@material-ui/core/ButtonBase";
 import Badge from "@material-ui/core/Badge";
 import Typography from "@material-ui/core/Typography";
 
-import InboxIcon from "@material-ui/icons/Inbox";
-
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
+    backgroundColor:theme.palette.secondary.ultraLight,
+    color:theme.palette.primary.dark,
     height: 100,
     display: "flex",
     flexGrow: 1,
@@ -20,16 +20,17 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexGrow: 1,
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   row2: {
     width: "100%",
     display: "flex",
-    flexGrow: 2,
+    flexGrow: 10,
     flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    textAlign:"center"
   },
 }));
 
@@ -42,13 +43,16 @@ const CardButton = ({ title, icon, notif, handelClick }) => {
       className={classes.mainContainer}
       onClick={handelClick}
     >
-      {notif !== undefined && (
+      {notif === undefined ? (
+        <div className={classes.row}>{icon}</div>
+      ) : (
         <div className={classes.row}>
           <Badge
             badgeContent={notif}
             max={999}
-            color="secondary"
-            children={<InboxIcon />}
+            color="primary"
+            children={icon}
+            
           />
         </div>
       )}
