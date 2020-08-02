@@ -1,4 +1,4 @@
-import { mainZones, unitList, provinces } from "../../app/fakeData";
+import { mainZones } from "../../app/fakeData";
 import { GET, POST } from "../../util/httpAxios";
 
 export const HTTP_GET_PROVINCES = "HTTP_GET_PROVINCES";
@@ -11,14 +11,17 @@ export const SELECT_SUB_ZONE = "SELECT_SUB_ZONE";
 export const HTTP_GET_UNITS = "HTTP_GET_UNITS";
 export const ADD_NEW_INVOICE_ITEM = "ADD_NEW_INVOICE_ITEM";
 export const SELECT_ITEM_FOR_EDIT = "SELECT_ITEM_FOR_EDIT";
+export const EDIT_MODAL_HANDLER = "EDIT_MODAL_HANDLER";
 export const EDIT_INVOICE_ITEM = "EDIT_INVOICE_ITEM";
 export const DELETE_INVOICE_ITEM = "DELETE_INVOICE_ITEM";
 export const HTTP_CREATE_NEW_INVOICE = "HTTP_CREATE_NEW_INVOICE";
-export const EDIT_MODAL_HANDLER = "EDIT_MODAL_HANDLER";
+export const RESET_INVOICE_ITEMS = "RESET_INVOICE_ITEMS";
+export const HTTP_GET_INVOICES_BY_CLIENT_ID = "HTTP_GET_INVOICES_BY_CLIENT_ID";
 
 export const httpGetProvinces = () => {
-  return (dispatch) => {
-    dispatch({ type: HTTP_GET_PROVINCES, payload: provinces });
+  return async (dispatch) => {
+    const response = await GET("/public/get-provinces");
+    dispatch({ type: HTTP_GET_PROVINCES, payload: response.result });
   };
 };
 
@@ -59,8 +62,9 @@ export const selectSubZone = (subZone) => {
 };
 
 export const httpGetUnits = () => {
-  return (dispatch) => {
-    dispatch({ type: HTTP_GET_UNITS, payload: unitList });
+  return async (dispatch) => {
+    const response = await GET("/public/get-units");
+    dispatch({ type: HTTP_GET_UNITS, payload: response.result });
   };
 };
 
@@ -73,6 +77,12 @@ export const addNewInvoiceItem = (item) => {
 export const selectForEdit = (item) => {
   return (dispatch) => {
     dispatch({ type: SELECT_ITEM_FOR_EDIT, payload: item });
+  };
+};
+
+export const editModalHandler = (boolean) => {
+  return (dispatch) => {
+    dispatch({ type: EDIT_MODAL_HANDLER, payload: boolean });
   };
 };
 
@@ -91,14 +101,26 @@ export const deleteInvoiceItem = (productId) => {
 export const httpCreateNewInvoice = (invoice) => {
   return async (dispatch) => {
     const response = await POST("/client/create-new-invoice", invoice);
+    console.log(invoice);
     console.log(response);
     // dispatch({ type: HTTP_CREATE_NEW_INVOICE, payload: response });
   };
 };
 
-export const editModalHandler = (boolean) => {
+export const resetInvoiceItems = () => {
   return (dispatch) => {
-    dispatch({ type: EDIT_MODAL_HANDLER, payload: boolean });
+    dispatch({ type: RESET_INVOICE_ITEMS });
+  };
+};
+
+export const httpGetInvoicesByClientId = (clientId) => {
+  return async (dispatch) => {
+    const response = await GET(`/client/get-invoices-by-client-id/${clientId}`);
+    console.log(response)
+    dispatch({
+      type: HTTP_GET_INVOICES_BY_CLIENT_ID,
+      payload: response.result,
+    });
   };
 };
 

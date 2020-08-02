@@ -87,7 +87,7 @@ export default function NewInvoiceCardList({ tableData }) {
 
   const deleteInvoiceItemHandler = () => {
     dispatch(deleteInvoiceItem(selectedItem.productId));
-    setIsOpenHandler(false);
+    // setIsOpenHandler(false);
   };
 
   const setIsOpenHandler = (boolean) => {

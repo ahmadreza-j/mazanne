@@ -28,7 +28,7 @@ export default function UInput({ type, label, value, onChangeText }) {
             }}
             label={label}
             variant="outlined"
-            value={value < 0 ? 1 : value}
+            value={value <= 0 ? 1 : value}
             onChange={changeTextHanler}
             size="small"
           />

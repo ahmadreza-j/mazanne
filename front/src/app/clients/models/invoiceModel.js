@@ -25,22 +25,22 @@ export class InvoiceItem {
 
 export class Invoice {
   constructor(
-    userInfo,
+    clientInfo,
     provinces,
     cities,
     mainZone,
     subZone,
     items,
+    status,
     location,
-    timestamp,    
   ) {
-    this.userInfo = userInfo;
+    this.clientInfo = clientInfo;
     this.provinces = provinces;
     this.cities = cities;
     this.mainZone = mainZone;
     this.subZone = subZone;
     this.items = items;
+    this.status = status;
     this.location = location;
-    this.timestamp = timestamp;
   }
 }

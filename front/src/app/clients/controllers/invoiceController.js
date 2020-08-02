@@ -56,7 +56,6 @@ export const createdInvoice = (
   const { data: mainZoneData, ..._mainZone } = mainZone;
   const { data: subZoneData, ..._subZone } = subZone;
   const location = null;
-  const timestamp = Date.now();
 
   return new clientModel.Invoice(
     userInfo,
@@ -65,7 +64,6 @@ export const createdInvoice = (
     _mainZone,
     _subZone,
     items,
-    location,
-    timestamp
+    location
   );
 };

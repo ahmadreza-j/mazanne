@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import RTL from "./app/rtl.config";
+import RTL from "./config/rtl.config";
 import MainRoutes from "./routes/MainRoutes";
 
 function App() {

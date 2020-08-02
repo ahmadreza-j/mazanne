@@ -189,4 +189,14 @@ export const provinces = [
       { id: uuidv4(), code: 10002003, label: "تفرش" },
     ],
   },
+  {
+    id: uuidv4(),
+    code: 10003,
+    label: "اصفهان",
+    cities: [
+      { id: uuidv4(), code: 10003001, label: "اصفهان" },
+      { id: uuidv4(), code: 10003002, label: "نایین" },
+      { id: uuidv4(), code: 10003003, label: "فولادشهر" },
+    ],
+  },
 ];

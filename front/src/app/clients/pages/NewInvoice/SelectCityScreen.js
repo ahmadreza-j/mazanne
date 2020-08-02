@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import ScreenContainer from "../../../shared/ScreenContainer";
 import MACSelect from "../../components/ui/MACSelect";
 import UFab from "../../components/ui/UFab";
+import ConfirmDialog from "../../components/ui/ConfirmDialog";
 
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 
@@ -34,10 +35,22 @@ const SelectCityScreen = () => {
   const dispatch = useDispatch();
 
   const allProvinces = useSelector((state) => state.clients.provinces);
+  const storeSelectedProvinces = useSelector(
+    (state) => state.clients.selectedProvinces
+  );
+  const storeSelectedCities = useSelector(
+    (state) => state.clients.selectedCities
+  );
 
-  const [selectedProvinces, setSelectedProvinces] = useState([]);
-  const [availCities, setAvailCities] = useState([]);
-  const [selectedCities, setSelectedCities] = useState([]);
+  const [selectedProvinces, setSelectedProvinces] = useState(
+    storeSelectedProvinces
+  );
+  const [availCities, setAvailCities] = useState(storeSelectedCities);
+  const [selectedCities, setSelectedCities] = useState(storeSelectedCities);
+  const [validProvinces, setValidProvinces] = useState([]);
+  const [invalidProvinces, setInvalidProvinces] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
 
   useEffect(() => {
     dispatch(httpGetProvinces());
@@ -54,6 +67,26 @@ const SelectCityScreen = () => {
       });
     });
   }, [availCities]);
+
+  useEffect(() => {
+    const validateProvinces = () => {
+      const _invalidProvinces = selectedProvinces.filter((province) =>
+        province.cities.every((city) => !selectedCities.includes(city))
+      );
+      // const validProvinces = selectedProvinces.filter(
+      //   (province) => !invalidProvinces.includes(province)
+      // );
+      const _validProvinces = selectedProvinces.filter((province) =>
+        province.cities.some((city) => selectedCities.includes(city))
+      );
+
+      setInvalidProvinces(_invalidProvinces);
+      setValidProvinces(_validProvinces);
+    };
+    validateProvinces();
+  }, [selectedProvinces, selectedCities]);
+
+  const labelSort = (a, b) => a.label.localeCompare(b.label, "fa");
 
   const availCitiesHandler = (selectedProvincesList) => {
     const allCities = [];
@@ -84,8 +117,31 @@ const SelectCityScreen = () => {
     setSelectedCities(availCities);
   };
 
+  const nextStepHandler = () => {
+    if (invalidProvinces.length === 0) {
+      nextStep();
+    } else {
+      showConfirmDialog();
+    }
+  };
+
+  const showConfirmDialog = () => {
+    setDialogOpen(true);
+    const invalidProvincesLabels = invalidProvinces.map(
+      (province) => province.label
+    );
+    if (invalidProvinces.length === 1) {
+      setDialogMessage(
+        `از استان "${invalidProvincesLabels}" شهری انتخاب نشده است، ادامه میدهید؟`
+      );
+    } else
+      setDialogMessage(
+        `از استان های "${invalidProvincesLabels}" شهری انتخاب نشده است، ادامه میدهید؟`
+      );
+  };
+
   const nextStep = async () => {
-    await dispatch(selectProvinces(selectedProvinces));
+    await dispatch(selectProvinces(validProvinces));
     await dispatch(selectCities(selectedCities));
     const path = "/select-zone";
     navigateHandler(path);
@@ -111,7 +167,7 @@ const SelectCityScreen = () => {
           <Grid item xs={true}>
             <MACSelect
               inputLabel="انتخاب استان"
-              selectiveData={allProvinces}
+              selectiveData={allProvinces.sort(labelSort)}
               selectedItem={selectedProvinces}
               onSelect={onSelectProvinces}
               placeholder="میتونید جستجو کنید ..."
@@ -139,7 +195,7 @@ const SelectCityScreen = () => {
             <Grid item xs={true}>
               <MACSelect
                 inputLabel="انتخاب شهر"
-                selectiveData={availCities}
+                selectiveData={availCities.sort(labelSort)}
                 selectedItem={selectedCities}
                 onSelect={onSelectCities}
                 placeholder="میتونید جستجو کنید ..."
@@ -169,13 +225,19 @@ const SelectCityScreen = () => {
               color="primary"
               size="large"
               fullWidth
-              onClick={nextStep}
+              onClick={nextStepHandler}
             >
               مرحله آخر
             </Button>
           </Grid>
         </Zoom>
       </Grid>
+      <ConfirmDialog
+        text={dialogMessage}
+        isOpen={dialogOpen}
+        setIsOpen={setDialogOpen}
+        confirmAction={nextStep}
+      />
     </ScreenContainer>
   );
 };

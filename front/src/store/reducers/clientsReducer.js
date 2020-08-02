@@ -12,6 +12,7 @@ const initialState = {
   newInvoiceItems: [],
   selectedItemForEdit: {},
   isEditModalOpen: false,
+  getedInvoices: [],
 };
 
 const clientsReducer = (state = initialState, action) => {
@@ -117,6 +118,13 @@ const clientsReducer = (state = initialState, action) => {
       return {
         ...state,
         newInvoiceItems: tempNewInvoiceItems,
+      };
+    }
+
+    case acType.HTTP_GET_INVOICES_BY_CLIENT_ID: {
+      return {
+        ...state,
+        getedInvoices: action.payload,
       };
     }
 

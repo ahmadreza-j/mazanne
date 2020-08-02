@@ -14,7 +14,7 @@ export default function UFab(props) {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down("xs"));
   return (
-    <Fab {...props} variant={isMobileScreen ? "round" : "extended"}>
+    <Fab variant={isMobileScreen ? "round" : "extended"} {...props} >
       {!isMobileScreen && (
         <span className={props.extendedlabel && classes.extendedlabel}>
           {props.extendedlabel && props.extendedlabel}

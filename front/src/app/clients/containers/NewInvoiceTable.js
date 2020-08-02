@@ -76,7 +76,7 @@ export default function CustomizedTables({ tableData }) {
 
   const deleteInvoiceItemHandler = () => {
     dispatch(deleteInvoiceItem(selectedItem.productId));
-    setIsOpenHandler(false);
+    // setIsOpenHandler(false);
   };
 
   const setIsOpenHandler = (boolean) => {

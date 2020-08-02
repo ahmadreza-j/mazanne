@@ -44,7 +44,7 @@ export default function USelect({
       fullWidth
     >
       {selectiveData.map((item) => (
-        <MenuItem key={item.id || uuidv4()} value={item}>
+        <MenuItem key={item._id || item.id || uuidv4()} value={item}>
           {item.label || ""}
         </MenuItem>
       ))}

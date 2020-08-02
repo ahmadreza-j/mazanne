@@ -6,8 +6,10 @@ import ScreenContainer from "../../shared/ScreenContainer";
 
 const useStyles = makeStyles((theme) => ({}));
 
-export default Template = () => {
+const Template = () => {
   const classes = useStyles();
-  
+
   return <div></div>;
 };
+
+export default Template;

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom'
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewInvoiceScreen = () => {
+const InactiveInvoiceScreen = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -126,4 +127,4 @@ const NewInvoiceScreen = () => {
   );
 };
 
-export default NewInvoiceScreen;
+export default InactiveInvoiceScreen;
