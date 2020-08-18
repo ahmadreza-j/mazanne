@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import {
   httpCreateNewConvertedProvincesCollection,
+  httpCreateNewConvertedCitiesCollection,
   httpDeleteConvertedProvincesCollection,
 } from "../../store/actions/adminAction";
 
@@ -16,6 +17,12 @@ const ProvincesCollectionScreen = () => {
     }
   };
 
+  const createNewConvertedCitiesCollection = () => {
+    if (window.confirm("are u sure?")) {
+      dispatch(httpCreateNewConvertedCitiesCollection());
+    }
+  };
+
   const deleteConvertedProvincesCollection = () => {
     if (window.confirm("are u sure?")) {
       dispatch(httpDeleteConvertedProvincesCollection());
@@ -25,8 +32,14 @@ const ProvincesCollectionScreen = () => {
   return (
     <ScreenContainer>
       <div>
-        <label>ایجاد کالکشن شهرها و استان های سفارشی شده ی من</label>
+        <label>ایجاد کالکشن استان های سفارشی شده ی من</label>
         <button onClick={createNewConvertedProvincesCollection}>
+          ایجاد کالکشن
+        </button>
+      </div>
+     <div>
+        <label>ایجاد کالکشن شهر های سفارشی شده ی من</label>
+        <button onClick={createNewConvertedCitiesCollection}>
           ایجاد کالکشن
         </button>
       </div>

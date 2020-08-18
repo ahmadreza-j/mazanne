@@ -11,6 +11,12 @@ const DashboardScreen = () => {
         <div>
           <Link to="/units-collection">واحدهای اندازه گیری</Link>
         </div>
+        <div>
+          <Link to="/parent-fields-collection">دسته بندی های پدر</Link>
+        </div>
+        <div>
+          <Link to="/fields-collection">حوزه ها و دسته بندی ها</Link>
+        </div>
       </div>
     </ScreenContainer>
   );

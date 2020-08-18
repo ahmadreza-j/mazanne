@@ -3,7 +3,6 @@ const HttpResponse = require("../models/http-response");
 
 const createNewUnit = async (req, res, next) => {
   const { label, code } = req.body;
-  console.log(req.body);
   const newUnit = new Unit({
     label: label,
     code: code,
@@ -29,7 +28,7 @@ const getUnits = async (req, res, next) => {
     const response = new HttpResponse(
       result,
       200,
-      `اطلاعات واحدهای اندازه گیری با موفقیت دریافت شد`
+      `all units successfully fetched!`
     );
     res.json(response);
   } catch (error) {

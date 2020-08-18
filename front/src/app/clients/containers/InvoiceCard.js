@@ -17,7 +17,7 @@ import IconLabel from "../components/ui/IconLabel";
 
 const useStyles = makeStyles((theme) => ({}));
 
-const Invoice = ({ invoice, navigateAction }) => {
+const InvoiceCard = ({ invoice, navigateAction }) => {
   const classes = useStyles();
 
   const labelRow = () => {
@@ -40,7 +40,7 @@ const Invoice = ({ invoice, navigateAction }) => {
     <ButtonBase onClick={navigateAction} component={Paper}>
       <Grid container spacing={1}>
         <Grid item>
-          <IconLabel label={invoice.status.desc} color="skyblue">
+          <IconLabel label={invoice.status.label} color="skyblue">
             <InfoIcon />
           </IconLabel>
         </Grid>
@@ -56,7 +56,7 @@ const Invoice = ({ invoice, navigateAction }) => {
         </Grid>
         <Grid item>
           <IconLabel
-            label={`${invoice.mainZone.label} / ${invoice.subZone.label}`}
+            label={`${invoice.parentField.label} / ${invoice.field.label}`}
           >
             <ClassIcon />
           </IconLabel>
@@ -76,4 +76,4 @@ const Invoice = ({ invoice, navigateAction }) => {
   );
 };
 
-export default Invoice;
+export default InvoiceCard;

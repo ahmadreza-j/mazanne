@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -14,6 +14,7 @@ import NewInvoiceComp from "../../containers/NewInvoiceComp";
 import EditInvoiceItemDialog from "../../containers/EditInvoiceItemDialog";
 import NewInvoiceTable from "../../containers/NewInvoiceTable";
 import NewInvoiceCardList from "../../containers/NewInvoiceCardList";
+import InvoiceStepper from "../../containers/InvoiceStepper";
 
 import {
   clientLocation,
@@ -81,7 +82,7 @@ const InactiveInvoiceScreen = () => {
       selectedCities,
       selectedMainZone,
       selectedSubZone,
-      newInvoiceItems,
+      newInvoiceItems
       // location
     );
     dispatch(httpCreateNewInvoice(newInvoice));
@@ -90,6 +91,7 @@ const InactiveInvoiceScreen = () => {
   return (
     <>
       <ScreenContainer>
+        <InvoiceStepper />
         <div className={classes.titleContainer}>
           <Typography variant="h5">استعلام قیمت</Typography>
         </div>

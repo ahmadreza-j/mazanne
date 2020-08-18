@@ -1,7 +1,9 @@
 import httpAxios from "axios";
+import serverUrl from "./serverUrl";
 
 const axios = httpAxios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: serverUrl + "/api",
+  // baseURL: "http://192.168.1.16:4000/api",
 });
 
 const onError = (error) => {

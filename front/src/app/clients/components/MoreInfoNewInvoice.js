@@ -65,7 +65,7 @@ const MoreInfoNewInvoice = ({
             </IconButton> */}
             <img
               className={classes.imgPreview}
-              src={productImg}
+              src={productImg.preview}
               alt="preview"
             />
           </div>

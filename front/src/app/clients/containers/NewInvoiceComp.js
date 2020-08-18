@@ -36,16 +36,25 @@ const NewInvoiceComp = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const selectedSubZone = useSelector((state) => state.clients.selectedSubZone);
+  const selectedField = useSelector((state) => state.clients.selectedField);
+  const childFields = useSelector((state) => state.clients.childFields);
   const unitList = useSelector((state) => state.clients.units);
   const initialState = invoiceInitialValue();
 
   useEffect(() => {
-    setProductCategory(selectedSubZone.data ? selectedSubZone.data[0] : "");
-    setProductUnit(unitList[0]);
-  }, [selectedSubZone, unitList]);
+    setProductChildField(
+      childFields.filter((item) => item.fieldId === selectedField._id)[0]
+    );
+    // console.log(
+    //   unitList.filter((item) => selectedField.unitsId.includes(item._id))[0]
+    // );
+    setProductUnit(
+      unitList.filter((item) => selectedField.unitsId.includes(item._id))[0]
+    );
+    // setProductUnit(unitList[0]);
+  }, [selectedField, unitList]);
 
-  const [productCategory, setProductCategory] = useState("");
+  const [productChildField, setProductChildField] = useState("");
   const [productName, setProductName] = useState(initialState.productName);
   const [productCount, setProductCount] = useState(initialState.productCount);
   const [productUnit, setProductUnit] = useState("");
@@ -54,8 +63,8 @@ const NewInvoiceComp = () => {
 
   const [showMore, setShowMore] = useState(initialState.showMore);
 
-  const onSelectCategory = (value) => {
-    setProductCategory(value);
+  const onSelectChildField = (value) => {
+    setProductChildField(value);
   };
   const onChangeProductName = (value) => {
     setProductName(value);
@@ -80,7 +89,7 @@ const NewInvoiceComp = () => {
 
   const addNewInvoiceItemHandler = async () => {
     const newItem = createdInvoiceItem(
-      productCategory,
+      productChildField,
       productName,
       productCount,
       productUnit,
@@ -97,7 +106,9 @@ const NewInvoiceComp = () => {
   const resetForm = () => {
     setProductName(initialState.productName);
     setProductCount(initialState.productCount);
-    setProductUnit(unitList[0]);
+    setProductUnit(
+      unitList.filter((item) => selectedField.unitsId.includes(item._id))[0]
+    );
     setProductDesc(initialState.productDesc);
     setProductImg(initialState.productImg);
     setShowMore(initialState.showMore);
@@ -117,9 +128,13 @@ const NewInvoiceComp = () => {
         <Grid item md={true} sm={6} xs={12}>
           <USelect2
             inputLabel="انتخاب دسته بندی"
-            selectiveData={selectedSubZone.data || []}
-            onSelect={onSelectCategory}
-            selectedItem={productCategory}
+            selectiveData={
+              childFields.filter(
+                (item) => item.fieldId === selectedField._id
+              ) || []
+            }
+            onSelect={onSelectChildField}
+            selectedItem={productChildField}
           />
         </Grid>
         <Grid item md={true} sm={6} xs={12}>
@@ -141,7 +156,9 @@ const NewInvoiceComp = () => {
         <Grid item md={2} sm={true} xs={true}>
           <USelect2
             inputLabel="واحد"
-            selectiveData={unitList}
+            selectiveData={unitList.filter((item) =>
+              selectedField.unitsId.includes(item._id)
+            )}
             onSelect={onSelectUnit}
             selectedItem={productUnit}
           />

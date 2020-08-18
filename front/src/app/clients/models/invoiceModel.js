@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export class InvoiceItem {
   constructor(
-    productCategory,
+    productChildField,
     productName,
     productCount,
     productUnit,
@@ -10,7 +10,7 @@ export class InvoiceItem {
     productImg
   ) {
     this.productId = uuidv4();
-    this.productCategory = productCategory;
+    this.productChildField = productChildField;
     this.productName = productName;
     this.productCount = productCount;
     this.productUnit = productUnit;
@@ -28,19 +28,43 @@ export class Invoice {
     clientInfo,
     provinces,
     cities,
-    mainZone,
-    subZone,
+    parentField,
+    field,
     items,
-    status,
-    location,
+    expireActivity,
+    location
   ) {
     this.clientInfo = clientInfo;
     this.provinces = provinces;
     this.cities = cities;
-    this.mainZone = mainZone;
-    this.subZone = subZone;
+    this.parentField = parentField;
+    this.field = field;
     this.items = items;
-    this.status = status;
+    this.expireActivity = expireActivity;
     this.location = location;
+  }
+
+  toFormData() {
+    let fd = new FormData();
+    fd.append("clientInfo", this.clientInfo);
+    for (let provinceId of this.provinces) {
+      fd.append("provinces", provinceId);
+    }
+    for (let cityId of this.cities) {
+      fd.append("cities", cityId);
+    }
+    fd.append("parentField", this.parentField);
+    fd.append("field", this.field);
+    for (let item of this.items) {
+      fd.append("productChildField", item.productChildField);
+      fd.append("productName", item.productName);
+      fd.append("productCount", item.productCount);
+      fd.append("productUnit", item.productUnit);
+      fd.append("productDesc", item.productDesc);
+      fd.append("productImg", item.productImg);
+    }
+    fd.append("expireActivity", this.expireActivity);
+    fd.append("location", this.location);
+    return fd;
   }
 }

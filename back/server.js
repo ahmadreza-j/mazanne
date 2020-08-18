@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -12,6 +13,11 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(
+  "/uploads/invoiceItemImages",
+  express.static(path.join("uploads", "invoiceItemImages"))
+);
 
 app.use("/api/public", publicRoutes);
 app.use("/api/ar-admin", adminRoutes);

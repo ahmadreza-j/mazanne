@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   httpCreateNewUnit,
-  httpFetchUnits,
   httpEditUnit,
   httpDeleteUnit,
 } from "../../store/actions/adminAction";
+
+import { httpGetUnits } from "../../store/actions/publicAction";
 import { Unit } from "./models/unitModel";
 
 import ScreenContainer from "../shared/ScreenContainer";
@@ -58,7 +59,7 @@ const UnitsCollectionScreen = () => {
   };
 
   const fetchUnits = async () => {
-    await dispatch(httpFetchUnits());
+    await dispatch(httpGetUnits());
   };
 
   const editHandler = (id, labelValue, codeValue = "") => {
@@ -123,7 +124,6 @@ const UnitsCollectionScreen = () => {
             value={codeValue}
             placeholder="کد واحد اندازه گیری"
             onChange={(e) => setCodeValueHandler(e)}
-            ref={unitInput}
           />
           <input style={m} type="submit" value="ایجاد در دیتابیس" />
         </form>

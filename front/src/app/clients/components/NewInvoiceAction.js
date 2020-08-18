@@ -15,7 +15,7 @@ const NewInvoiceAction = ({
 }) => {
 
   return (
-    <Grid container spacing={1} justify="space-around">
+    <Grid container spacing={1} >
       <Grid item>
         <UFab
           aria-label="more"
@@ -26,7 +26,7 @@ const NewInvoiceAction = ({
           {showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </UFab>
       </Grid>
-      <Grid item>
+      <Grid item >
         <UFab
           extendedlabel="افزودن"
           aria-label="add"

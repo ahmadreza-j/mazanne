@@ -12,6 +12,8 @@ import Slide from "@material-ui/core/Slide";
 
 import ConfirmDialog from "../components/ui/ConfirmDialog";
 import InvoiceItemAction from "../components/InvoiceItemAction";
+import { availIdentifire } from "../../../util/availIdentifire";
+import serverUrl from "../../../util/serverUrl";
 
 import {
   selectForEdit,
@@ -76,7 +78,7 @@ export default function CustomizedTables({ tableData }) {
 
   const deleteInvoiceItemHandler = () => {
     dispatch(deleteInvoiceItem(selectedItem.productId));
-    // setIsOpenHandler(false);
+    setIsOpenHandler(false);
   };
 
   const setIsOpenHandler = (boolean) => {
@@ -115,14 +117,14 @@ export default function CustomizedTables({ tableData }) {
                 in={true}
                 mountOnEnter
                 unmountOnExit
-                key={item.productId}
+                key={availIdentifire(item)}
               >
                 <StyledTableRow>
                   <StyledTableCell align="center" component="th" scope="row">
                     {index + 1}
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {item.productCategory.label}
+                    {item.productChildField.label}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {item.productName}
@@ -143,7 +145,11 @@ export default function CustomizedTables({ tableData }) {
                       {item.productImg && (
                         <img
                           className={classes.imgPreview}
-                          src={item.productImg}
+                          src={
+                            item.productImg.preview
+                              ? item.productImg.preview
+                              : `${serverUrl}/${item.productImg}`
+                          }
                           alt="preview"
                         />
                       )}

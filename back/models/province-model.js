@@ -5,15 +5,16 @@ const citySchema = new Schema({
   latitude: String,
   longitude: String,
   label: String,
+  provinceId: { type: mongoose.Types.ObjectId, ref: "Province" },
 });
 
-const province = new Schema({
+const provinceSchema = new Schema({
   label: String,
-  cities: [citySchema],
 });
 
 module.exports = {
-  Province: mongoose.model("Province", province),
+  Province: mongoose.model("Province", provinceSchema),
+  City: mongoose.model("City", citySchema),
   Imported_Provinces: mongoose.model(
     "Imported_Provinces",
     new Schema({}, { collection: "imported_provinces" })

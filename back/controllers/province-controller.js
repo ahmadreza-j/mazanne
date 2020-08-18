@@ -1,73 +1,102 @@
-const { Province, Imported_Provinces } = require("../models/province-model");
+const {
+  Province,
+  City,
+  Imported_Provinces,
+} = require("../models/province-model");
 const HttpResponse = require("../models/http-response");
 
-const createNewConvertedProvincesCollection = async (req, res, next) => {
-  const importedProvinces = await Imported_Provinces.find();
-  const provinces = await Province.find();
-  if (provinces.length > 0) {
+const createProvincesCollection = async (req, res, next) => {
+  const importedCities = await Imported_Provinces.find();
+  const getedProvinces = await Province.find();
+  if (getedProvinces.length > 0) {
     const response = new HttpResponse(
-      provinces,
+      getedProvinces,
       200,
-      "خطا، این کالکشن قبلا ایجاد شده است"
+      "error!!! this collection has already created!"
     );
     res.json(response);
   } else {
+    const trueTypeImportedCities = importedCities.map((item) => item._doc);
+
+    const allProvinces = new Set(
+      trueTypeImportedCities.map((item) => item.province.trim())
+    );
+
+    try {
+      allProvinces.forEach(async (item) => {
+        let newProvince = new Province({ label: item });
+        await newProvince.save();
+      });
+      const response = new HttpResponse(
+        [],
+        200,
+        "'provinces' collection created successfully!"
+      );
+      res.json(response);
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+    }
+  }
+};
+
+const createCitiesCollection = async (req, res, next) => {
+  const importedProvinces = await Imported_Provinces.find();
+  const getedCities = await City.find();
+  if (getedCities.length > 0) {
+    const response = new HttpResponse(
+      getedCities,
+      200,
+      "error!!! this collection has already created!"
+    );
+    res.json(response);
+  } else {
+    const getedProvinces = await Province.find();
     const trueTypeImportedProvinces = importedProvinces.map(
       (item) => item._doc
     );
-    // const allCities = tempAllProvinces.map((province) => province);
-    const allCities = trueTypeImportedProvinces.filter(
-      (province) =>
-        province.state === province.city ||
-        province.city === "یاسوج" ||
-        province.city === "دهدشت" ||
-        province.state === "گچساران" ||
-        province.state === "دنا" ||
-        province.city === "نسیم شهر" ||
-        province.city === "بومهن" ||
-        province.city === "اندیشه" ||
-        province.city === "اندیشه" ||
-        province.city === "پرند" ||
-        province.city === "لواسان" ||
-        province.city === "شمشک" ||
-        province.city === "فشم" ||
-        province.city === "رودهن" ||
-        province.city === "آبعلی"
+    const allFilteredCities = trueTypeImportedProvinces.filter(
+      (city) =>
+        city.state === city.city ||
+        city.city === "یاسوج" ||
+        city.city === "دهدشت" ||
+        city.state === "گچساران" ||
+        city.state === "دنا" ||
+        city.city === "نسیم شهر" ||
+        city.city === "بومهن" ||
+        city.city === "اندیشه" ||
+        city.city === "اندیشه" ||
+        city.city === "پرند" ||
+        city.city === "لواسان" ||
+        city.city === "شمشک" ||
+        city.city === "فشم" ||
+        city.city === "رودهن" ||
+        city.city === "آبعلی"
     );
 
-    let target1 = [];
-    let target2 = [];
+    let customizedCities = [];
 
-    allCities.forEach((item) => {
-      if (!target1.includes(item.province)) {
-        target1.push(item.province);
-      }
-    });
-
-    target1.forEach((provinceLabel) => {
-      target2.push({ label: provinceLabel, cities: [] });
-    });
-
-    allCities.forEach((item) => {
-      target2.forEach((province) => {
-        if (province.label === item.province) {
-          province.cities.push({
-            latitude: item.latitude,
-            longitude: item.longitude,
-            label: item.city,
+    allFilteredCities.forEach((city) => {
+      getedProvinces.forEach((province) => {
+        if (province.label.trim() === city.province.trim()) {
+          customizedCities.push({
+            latitude: city.latitude.trim(),
+            longitude: city.longitude.trim(),
+            label: city.city.trim(),
+            provinceId: province._id,
           });
         }
       });
     });
 
-    target2.forEach(async (item) => {
-      let newProvince = new Province(item);
-      await newProvince.save();
+    customizedCities.forEach(async (item) => {
+      let newCity = new City(item);
+      await newCity.save();
     });
     const response = new HttpResponse(
       [],
       200,
-      "collection created successfully!"
+      "'cities' collection created successfully!"
     );
     res.json(response);
   }
@@ -79,7 +108,7 @@ const getProvinces = async (req, res, next) => {
     const response = new HttpResponse(
       result,
       200,
-      "اطلاعات استان ها و شهرها با موفقیت دریافت شد"
+      "اطلاعات استان ها با موفقیت دریافت شد"
     );
     res.json(response);
   } catch (error) {
@@ -88,24 +117,80 @@ const getProvinces = async (req, res, next) => {
   }
 };
 
+const getCities = async (req, res, next) => {
+  const type = req.params.type;
+  if (type === "populated") {
+    try {
+      const result = await City.find()
+        .select("label")
+        .populate("provinceId", "label");
+      const response = new HttpResponse(
+        result,
+        200,
+        "اطلاعات شهرها با موفقیت دریافت شد"
+      );
+      res.json(response);
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+    }
+  } else {
+    try {
+      const result = await City.find().select("label provinceId");
+      const response = new HttpResponse(
+        result,
+        200,
+        "اطلاعات شهرها با موفقیت دریافت شد"
+      );
+      res.json(response);
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+    }
+  }
+};
+
 const deleteConvertedProvincesCollection = async (req, res, next) => {
   const provinces = await Province.find();
+  const cities = await City.find();
   if (provinces.length > 0) {
-    const result = await Province.collection.drop();
+    await Province.collection.drop();
     const response = new HttpResponse(
-      result,
+      [],
       200,
-      "collection droped successfully!"
+      "'provinces' collection droped successfully!"
     );
+    if (cities.length > 0) {
+      await City.collection.drop();
+      response = new HttpResponse(
+        [],
+        200,
+        "'provinces & cities' collections droped successfully!"
+      );
+    }
     res.json(response);
   } else {
-    const response = new HttpResponse([], 404, "collection not found!");
+    const response = new HttpResponse(
+      [],
+      404,
+      "'provinces & cities' collection not found!"
+    );
+    if (cities.length > 0) {
+      await City.collection.drop();
+      response = new HttpResponse(
+        [],
+        404,
+        "'provinces' collections not found! but 'cities' collections droped successfully!"
+      );
+    }
     res.json(response);
   }
 };
 
 module.exports = {
-  createNewConvertedProvincesCollection,
+  createProvincesCollection,
+  createCitiesCollection,
   getProvinces,
+  getCities,
   deleteConvertedProvincesCollection,
 };

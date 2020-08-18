@@ -26,7 +26,12 @@ const ImgUpload = ({ onUploadInputChange, isImgSelected }) => {
 
   const handleChange = (event) => {
     if (event.target.files[0]) {
-      onUploadInputChange(URL.createObjectURL(event.target.files[0]));
+      const image = {
+        file: event.target.files[0],
+        preview: URL.createObjectURL(event.target.files[0]),
+      };
+      onUploadInputChange(image);
+      // onUploadInputChange(URL.createObjectURL(event.target.files[0]));
     }
   };
   const handleClick = (event) => {
@@ -51,7 +56,7 @@ const ImgUpload = ({ onUploadInputChange, isImgSelected }) => {
       {!isImgSelected ? (
         <>
           <input
-            accept="image/*"
+            accept=".jpg,.png,.jpeg"
             className={classes.uploadInput}
             id={id1}
             type="file"
@@ -80,7 +85,7 @@ const ImgUpload = ({ onUploadInputChange, isImgSelected }) => {
             color="secondary"
             onClick={handleClick}
           >
-            <EditIcon/>
+            <EditIcon />
           </UFab>
           <Menu
             id={id2}
@@ -91,14 +96,14 @@ const ImgUpload = ({ onUploadInputChange, isImgSelected }) => {
           >
             <MenuItem onClick={editHandler}>
               <input
-                accept="image/*"
+                accept=".jpg,.png,.jpeg"
                 className={classes.uploadInput}
                 id={id1}
                 type="file"
                 onChange={handleChange}
               />
               <label htmlFor={id1}>
-                <FindReplace color="primary"/>
+                <FindReplace color="primary" />
               </label>
             </MenuItem>
             <MenuItem onClick={deleteHandler}>

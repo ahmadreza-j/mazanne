@@ -2,43 +2,60 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const invoiceItemsSchema = new Schema({
-  productCategory: Object,
-  productCount: Number,
-  productDesc: String,
-  // productId: String,
-  productImg: Object,
+  productChildField: {
+    type: mongoose.Types.ObjectId,
+    ref: "ChildField",
+    required: true,
+  },
   productName: String,
-  productUnit: Object,
+  productCount: Number,
+  // productCount: Number,
+  productUnit: {
+    productDesc: String,
+    type: mongoose.Types.ObjectId,
+    ref: "Unit",
+    required: true,
+  },
+  productImg: String,
 });
 
 const invoiceSchema = new Schema(
   {
     clientInfo: {
-      type: Object,
+      type: String,
       required: true,
     },
-    provinces: {
-      type: Array.of(Object),
+    provinces: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Province",
+        required: true,
+      },
+    ],
+
+    cities: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "City",
+        required: true,
+      },
+    ],
+    parentField: {
+      type: mongoose.Types.ObjectId,
+      ref: "ParentField",
       required: true,
     },
-    cities: {
-      type: Array.of(Object),
-      required: true,
-    },
-    mainZone: {
-      type: Object,
-      required: true,
-    },
-    subZone: {
-      type: Object,
+    field: {
+      type: mongoose.Types.ObjectId,
+      ref: "Field",
       required: true,
     },
     items: [invoiceItemsSchema],
     status: {
       // waiting, accepted, rejected, drafted
-      type: Object,
-      default: { code: 1 , desc:"در انتظار تأیید ناظر"},
+      type: mongoose.Types.ObjectId,
       required: true,
+      ref: "Status",
     },
 
     location: {
@@ -47,7 +64,9 @@ const invoiceSchema = new Schema(
     },
     updateCount: {
       type: Number,
+      // type: Number,
     },
+    expireActivity: Number,
   },
   { timestamps: true }
 );

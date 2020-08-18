@@ -1,31 +1,27 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
-// import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
-// const useStyles = makeStyles((theme) => ({
-//   formControl: {
-//     // margin: theme.spacing(1),
-//     width: "100%",
-//     // minWidth: 120,
-//   },
-// }));
+import { availIdentifire } from "../../../../util/availIdentifire";
 
 export default function USelect({
   inputLabel,
   selectiveData,
   selectedItem,
   onSelect,
+  ...restProps
 }) {
+  const selectedItemId = availIdentifire(selectedItem);
+
   const handleChange = (event, child) => {
-    // let selected = {
-    //   value: event.target.value,
-    //   // label: child.props.children,
-    // };
     const selected = event.target.value;
-    onSelect(selected);
+    const _selected = selectiveData.find(
+      (item) => availIdentifire(item) === selected
+    );
+    onSelect(_selected);
+    // onSelect(selected);
   };
 
   return (
@@ -33,19 +29,18 @@ export default function USelect({
       id={uuidv4()}
       select
       label={inputLabel || "انتخاب کنید"}
-      value={selectedItem ? selectedItem : ""}
+      // value={selectedItem}
+      value={selectedItemId}
       onChange={handleChange}
-      // SelectProps={{
-      //   native: true,
-      // }}
-      helperText=""
+      disabled={selectiveData.length === 0}
       variant="outlined"
       size="small"
       fullWidth
+      {...restProps}
     >
       {selectiveData.map((item) => (
-        <MenuItem key={item._id || item.id || uuidv4()} value={item}>
-          {item.label || ""}
+        <MenuItem key={availIdentifire(item)} value={availIdentifire(item)}>
+          {item.label || "?"}
         </MenuItem>
       ))}
     </TextField>

@@ -118,7 +118,7 @@ export default function NewInvoiceCardList({ tableData }) {
               <div className={classes.row}>
                 <ListIcon />
                 <Typography variant="body1">
-                  {item.productCategory.label}
+                  {item.productChildField.label}
                 </Typography>
               </div>
               <div className={classes.row}>
@@ -152,7 +152,7 @@ export default function NewInvoiceCardList({ tableData }) {
               {item.productImg && (
                 <img
                   className={classes.imgPreview}
-                  src={item.productImg}
+                  src={item.productImg.preview}
                   alt="preview"
                 />
               )}

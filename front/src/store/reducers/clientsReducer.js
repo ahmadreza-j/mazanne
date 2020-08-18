@@ -1,26 +1,92 @@
 import * as acType from "../actions/clientsAction";
+import * as p_acType from "../actions/publicAction";
 
 const initialState = {
   provinces: [],
+  cities: [],
+  parentFields: [],
+  fields: [],
+  childFields: [],
+  units: [],
+  expireActivities: [],
+  getedClientInvoices: [],
+  getedInvoiceById: {},
+
   selectedProvinces: [],
   selectedCities: [],
-  // isShowSelectZone: true,
-  zones: [],
-  selectedMainZone: {},
-  selectedSubZone: {},
-  units: [],
-  newInvoiceItems: [],
+  selectedParentField: {},
+  selectedField: {},
+  selectedChildField: {},
+  selectedExpireActivity: {},
   selectedItemForEdit: {},
+
+  newInvoiceItems: [],
   isEditModalOpen: false,
-  getedInvoices: [],
 };
 
 const clientsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case acType.HTTP_GET_PROVINCES: {
+    case p_acType.HTTP_GET_PROVINCES: {
       return {
         ...state,
         provinces: action.payload,
+      };
+    }
+
+    case p_acType.HTTP_GET_CITIES: {
+      return {
+        ...state,
+        cities: action.payload,
+      };
+    }
+
+    case p_acType.HTTP_GET_ALL_PARENT_FIELDS: {
+      return {
+        ...state,
+        parentFields: action.payload,
+      };
+    }
+
+    case p_acType.HTTP_GET_ALL_FIELDS: {
+      return {
+        ...state,
+        fields: action.payload,
+      };
+    }
+
+    case p_acType.HTTP_GET_ALL_CHILD_FIELDS: {
+      return {
+        ...state,
+        childFields: action.payload,
+      };
+    }
+
+    case p_acType.HTTP_GET_UNITS: {
+      return {
+        ...state,
+        units: action.payload,
+      };
+    }
+
+    case p_acType.HTTP_GET_EXPIRE_ACTIVITIES: {
+      return {
+        ...state,
+        expireActivities: action.payload,
+        selectedExpireActivity: action.payload[0],
+      };
+    }
+
+    case acType.HTTP_GET_INVOICES_BY_CLIENT_ID: {
+      return {
+        ...state,
+        getedClientInvoices: action.payload,
+      };
+    }
+
+    case acType.HTTP_GET_INVOICE_BY_ID: {
+      return {
+        ...state,
+        getedInvoiceById: action.payload,
       };
     }
 
@@ -38,46 +104,31 @@ const clientsReducer = (state = initialState, action) => {
       };
     }
 
-    case acType.HTTP_GET_ZONES_INFO: {
+    case acType.SELECT_PARENT_FIELD: {
       return {
         ...state,
-        zones: action.payload,
+        selectedParentField: action.payload,
       };
     }
 
-    // case acType.SHOW_SELECT_ZONE_HANDLER: {
-    //   return {
-    //     ...state,
-    //     isShowSelectZone: action.payload,
-    //   };
-    // }
-
-    case acType.SELECT_MAIN_ZONE: {
+    case acType.SELECT_FIELD: {
       return {
         ...state,
-        selectedMainZone: action.payload,
+        selectedField: action.payload,
       };
     }
 
-    case acType.SELECT_SUB_ZONE: {
+    case acType.SELECT_CHILD_FIELD: {
       return {
         ...state,
-        selectedSubZone: action.payload,
+        selectedChildField: action.payload,
       };
     }
 
-    case acType.HTTP_GET_UNITS: {
+    case acType.SELECT_EXPIRE_ACTIVITY: {
       return {
         ...state,
-        units: action.payload,
-      };
-    }
-
-    case acType.ADD_NEW_INVOICE_ITEM: {
-      const tempNewInvoiceItems = [...state.newInvoiceItems, action.payload];
-      return {
-        ...state,
-        newInvoiceItems: tempNewInvoiceItems,
+        selectedExpireActivity: action.payload,
       };
     }
 
@@ -88,10 +139,18 @@ const clientsReducer = (state = initialState, action) => {
       };
     }
 
-    case acType.EDIT_MODAL_HANDLER: {
+    case acType.SET_INVOICE_ITEMS_LIST: {
       return {
         ...state,
-        isEditModalOpen: action.payload,
+        newInvoiceItems: action.payload,
+      };
+    }
+
+    case acType.ADD_NEW_INVOICE_ITEM: {
+      const tempNewInvoiceItems = [...state.newInvoiceItems, action.payload];
+      return {
+        ...state,
+        newInvoiceItems: tempNewInvoiceItems,
       };
     }
 
@@ -121,10 +180,10 @@ const clientsReducer = (state = initialState, action) => {
       };
     }
 
-    case acType.HTTP_GET_INVOICES_BY_CLIENT_ID: {
+    case acType.EDIT_MODAL_HANDLER: {
       return {
         ...state,
-        getedInvoices: action.payload,
+        isEditModalOpen: action.payload,
       };
     }
 

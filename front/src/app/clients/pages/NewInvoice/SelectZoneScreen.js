@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import Path from "../../../../routes/Path";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
@@ -61,7 +63,7 @@ const SelectZoneScreen = () => {
 
   const selectSubZoneHandler = async (value) => {
     await dispatch(selectSubZone(value));
-    const path = "/new-invoice";
+    const path = Path.clients.newInvoice;
     navigateHandler(path);
   };
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import Path from "../../../../routes/Path";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Zoom from "@material-ui/core/Zoom";
@@ -143,7 +145,7 @@ const SelectCityScreen = () => {
   const nextStep = async () => {
     await dispatch(selectProvinces(validProvinces));
     await dispatch(selectCities(selectedCities));
-    const path = "/select-zone";
+    const path = Path.clients.selectZone;
     navigateHandler(path);
   };
 

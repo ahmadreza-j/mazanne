@@ -14,18 +14,19 @@ import ResponsiveModal from "../components/ui/ResponsiveModal";
 
 import MoreInfoNewInvoice from "../components/MoreInfoNewInvoice";
 import EditInvoiceAction from "../components/EditInvoiceAction";
-import { unitList } from "../../fakeData";
 
 const EditInvoiceItemDialog = () => {
   const dispatch = useDispatch();
-  const selectedSubZone = useSelector((state) => state.clients.selectedSubZone);
+  const selectedField = useSelector((state) => state.clients.selectedField);
+  const childFields = useSelector((state) => state.clients.childFields);
   const selectedItem = useSelector(
     (state) => state.clients.selectedItemForEdit
   );
   const isModalOpen = useSelector((state) => state.clients.isEditModalOpen);
+  const unitList = useSelector((state) => state.clients.units);
 
-  const [productCategory, setProductCategory] = useState(
-    selectedItem.productCategory
+  const [productChildField, setProductChildField] = useState(
+    selectedItem.productChildField
   );
   const [productName, setProductName] = useState(selectedItem.productName);
   const [productCount, setProductCount] = useState(selectedItem.productCount);
@@ -34,7 +35,7 @@ const EditInvoiceItemDialog = () => {
   const [productImg, setProductImg] = useState(selectedItem.productImg);
 
   const onSelectCategory = (value) => {
-    setProductCategory(value);
+    setProductChildField(value);
   };
   const onChangeProductName = (value) => {
     setProductName(value);
@@ -55,7 +56,7 @@ const EditInvoiceItemDialog = () => {
   const editInvoiceItemHandler = async () => {
     const item = {
       ...selectedItem,
-      productCategory,
+      productChildField,
       productName,
       productCount,
       productUnit,
@@ -83,9 +84,11 @@ const EditInvoiceItemDialog = () => {
           <Grid item md={3} xs={12}>
             <USelect2
               inputLabel="انتخاب دسته بندی"
-              selectiveData={selectedSubZone.data}
+              selectiveData={childFields.filter(
+                (item) => item.fieldId === selectedField._id
+              )}
               onSelect={onSelectCategory}
-              selectedItem={productCategory}
+              selectedItem={productChildField}
             />
           </Grid>
           <Grid item md={3} xs={12}>
@@ -107,7 +110,9 @@ const EditInvoiceItemDialog = () => {
           <Grid item md={3} xs={6}>
             <USelect2
               inputLabel="واحد"
-              selectiveData={unitList}
+              selectiveData={unitList.filter((item) =>
+                selectedField.unitsId.includes(item._id)
+              )}
               onSelect={onSelectUnit}
               selectedItem={productUnit}
             />
